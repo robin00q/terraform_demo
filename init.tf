@@ -32,3 +32,17 @@ terraform {
     key = "sjlee/terraform/demo/terraform.tfstate"
   }
 }
+
+# VPC Module
+module "module-vpc" {
+  source = "./vpc"
+}
+
+# LB Module
+module "load-balancer" {
+  source = "./load_balancer"
+
+  vpc_id = module.module-vpc.sjlee-terraform-aws-vpc-id
+  vpc_name = module.module-vpc.sjlee-terraform-aws-vpc-name
+  public_subnet_id = module.module-vpc.sjlee-terraform-public-aws-subnet-id
+}
