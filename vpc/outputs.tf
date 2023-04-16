@@ -6,6 +6,6 @@ output "sjlee-terraform-aws-vpc-name" {
   value = aws_vpc.sjlee-terraform-aws-vpc.tags.Name
 }
 
-output "sjlee-terraform-public-aws-subnet-id" {
+output "sjlee-terraform-public-aws-subnet-ids" {
   value = aws_subnet.sjlee-terraform-public-aws-subnet.*.id
 }
