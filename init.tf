@@ -45,4 +45,12 @@ module "load-balancer" {
   vpc_id = module.module-vpc.sjlee-terraform-aws-vpc-id
   vpc_name = module.module-vpc.sjlee-terraform-aws-vpc-name
   public_subnet_ids = module.module-vpc.sjlee-terraform-public-aws-subnet-ids
+  compute_cloud_ids = module.ec2.sjlee-terraform-compute-cloud-ids
+}
+
+module "ec2" {
+  source = "./ec2"
+
+  vpc_id = module.module-vpc.sjlee-terraform-aws-vpc-id
+  public_subnet_ids = module.module-vpc.sjlee-terraform-public-aws-subnet-ids
 }
