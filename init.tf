@@ -1,9 +1,9 @@
 # backend S3 설정
 resource "aws_s3_bucket" "tfstate" {
-  bucket = "${var.account_id}-ap-northeast-2-tfstate"
+  bucket = "${var.tfstate_s3_bucket_name}"
 }
 
-resource "aws_s3_bucket_versioning" "tfstate_versioning" {
+resource "aws_s3_bucket_versioning" "tfstate_versioning_1" {
   bucket = aws_s3_bucket.tfstate.id
 
   versioning_configuration {
@@ -12,8 +12,8 @@ resource "aws_s3_bucket_versioning" "tfstate_versioning" {
 }
 
 # backend dynamoDB 설정
-resource "aws_dynamodb_table" "tfstate_lock" {
-  name = "terraform-lock"
+resource "aws_dynamodb_table" "tfstate_lock_1" {
+  name = "${var.tfstate_dynamo_lock_name}"
   hash_key = "LockID"
   billing_mode = "PAY_PER_REQUEST"
 
@@ -26,8 +26,8 @@ resource "aws_dynamodb_table" "tfstate_lock" {
 # backend setting (`terraform init`)
 terraform {
   backend "s3" {
-    bucket = "sjlee-terraform-demo-ap-northeast-2-tfstate"
-    dynamodb_table = "terraform-lock"
+    bucket = "sjlee-terraform-tfstate-bucket-1"
+    dynamodb_table = "sjlee-terraform-tfstate-dynamo-1"
     region = "ap-northeast-2"
     key = "sjlee/terraform/demo/terraform.tfstate"
   }
