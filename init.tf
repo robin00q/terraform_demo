@@ -38,21 +38,11 @@ module "module-vpc" {
   source = "./vpc"
 }
 
-# LB Module
-module "load-balancer" {
-  source = "./load_balancer"
-
-  vpc-id = module.module-vpc.sjlee-vpc-id
-  vpc-name = module.module-vpc.sjlee-vpc-name
-  vpc-cidr-block = module.module-vpc.sjlee-vpc-cidr-block
-  public-subnet-ids = module.module-vpc.sjlee-public-subnet-ids
-
-  compute-cloud-ids = module.ec2.sjlee-ec2-ids
-}
-
 module "ec2" {
   source = "./ec2"
 
   vpc-id = module.module-vpc.sjlee-vpc-id
+  vpc-name = module.module-vpc.sjlee-vpc-name
+  vpc-cidr-block = module.module-vpc.sjlee-vpc-cidr-block
   public-subnet-ids = module.module-vpc.sjlee-public-subnet-ids
 }

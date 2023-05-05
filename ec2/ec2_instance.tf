@@ -12,6 +12,13 @@ resource "aws_instance" "sjlee-public-subnet-ec2" {
   subnet_id = element(var.public-subnet-ids.*, count.index)
 }
 
+resource "aws_lb_target_group_attachment" "sjlee-terraform-lb-target-group-attachment" {
+  count = length(aws_instance.sjlee-public-subnet-ec2)
+
+  target_group_arn = aws_alb_target_group.sjlee-alb-target-group.arn
+  target_id        = aws_instance.sjlee-public-subnet-ec2[count.index].id
+}
+
 resource "aws_security_group" "sjlee-security-group-for-ec2" {
   name = "public-subnet-aws-security-group"
   vpc_id = var.vpc-id
