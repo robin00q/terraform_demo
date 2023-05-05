@@ -1,20 +1,20 @@
-resource "aws_instance" "sjlee-terraform-public-subnet-aws-instance" {
-  count = length(var.public_subnet_ids)
+resource "aws_instance" "sjlee-public-subnet-ec2" {
+  count = length(var.public-subnet-ids)
 
-  ami = "ami-03db74b70e1da9c56"
-  instance_type = "t2.micro"
+  ami = var.amazon-linux-2-ami-x86
+  instance_type = var.t2-micro
   associate_public_ip_address = true # EC2 에 public IP 주소 할당할 것인지에 대한 여부
-  vpc_security_group_ids = [aws_security_group.sjlee-terraform-aws-security-group-for-aws-instance.id]
+  vpc_security_group_ids = [aws_security_group.sjlee-security-group-for-ec2.id]
 
   # sudo yum install java-17-amazon-corretto
   # sudo yum install git
 
-  subnet_id = element("${var.public_subnet_ids.*}", count.index)
+  subnet_id = element(var.public-subnet-ids.*, count.index)
 }
 
-resource "aws_security_group" "sjlee-terraform-aws-security-group-for-aws-instance" {
+resource "aws_security_group" "sjlee-security-group-for-ec2" {
   name = "public-subnet-aws-security-group"
-  vpc_id = var.vpc_id
+  vpc_id = var.vpc-id
 
   # Allow 8080 port
   ingress {

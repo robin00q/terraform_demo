@@ -1,3 +1,3 @@
-output "sjlee-terraform-compute-cloud-ids" {
-  value = aws_instance.sjlee-terraform-public-subnet-aws-instance.*.id
+output "sjlee-ec2-ids" {
+  value = aws_instance.sjlee-public-subnet-ec2.*.id
 }

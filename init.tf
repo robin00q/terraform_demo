@@ -47,12 +47,12 @@ module "load-balancer" {
   vpc-cidr-block = module.module-vpc.sjlee-vpc-cidr-block
   public-subnet-ids = module.module-vpc.sjlee-public-subnet-ids
 
-  compute-cloud-ids = module.ec2.sjlee-terraform-compute-cloud-ids
+  compute-cloud-ids = module.ec2.sjlee-ec2-ids
 }
 
 module "ec2" {
   source = "./ec2"
 
-  vpc_id = module.module-vpc.sjlee-vpc-id
-  public_subnet_ids = module.module-vpc.sjlee-public-subnet-ids
+  vpc-id = module.module-vpc.sjlee-vpc-id
+  public-subnet-ids = module.module-vpc.sjlee-public-subnet-ids
 }
