@@ -42,10 +42,12 @@ module "module-vpc" {
 module "load-balancer" {
   source = "./load_balancer"
 
-  vpc_id = module.module-vpc.sjlee-vpc-id
-  vpc_name = module.module-vpc.sjlee-vpc-name
-  public_subnet_ids = module.module-vpc.sjlee-public-subnet-ids
-  compute_cloud_ids = module.ec2.sjlee-terraform-compute-cloud-ids
+  vpc-id = module.module-vpc.sjlee-vpc-id
+  vpc-name = module.module-vpc.sjlee-vpc-name
+  vpc-cidr-block = module.module-vpc.sjlee-vpc-cidr-block
+  public-subnet-ids = module.module-vpc.sjlee-public-subnet-ids
+
+  compute-cloud-ids = module.ec2.sjlee-terraform-compute-cloud-ids
 }
 
 module "ec2" {

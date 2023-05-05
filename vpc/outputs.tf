@@ -8,6 +8,10 @@ output "sjlee-vpc-name" {
   value = aws_vpc.sjlee-vpc.tags.Name
 }
 
+output "sjlee-vpc-cidr-block" {
+  value = aws_vpc.sjlee-vpc.cidr_block
+}
+
 output "sjlee-public-subnet-ids" {
   description = "Public Subnet Ids"
   value = aws_subnet.sjlee-public-subnet.*.id

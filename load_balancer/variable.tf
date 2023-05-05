@@ -1,11 +1,43 @@
-variable "vpc_id" {}
-
-variable "vpc_name" {}
-
-variable "public_subnet_ids" {}
-
-variable "service_port" {
-  default = 8080
+#########
+# External VPC
+#########
+variable "vpc-id" {
+  type = string
 }
 
-variable "compute_cloud_ids" {}
+variable "vpc-name" {
+  type = string
+}
+
+variable "vpc-cidr-block" {
+  type = string
+}
+
+variable "public-subnet-ids" {
+  type = list(string)
+}
+
+#########
+# External EC2
+#########
+variable "compute-cloud-ids" {
+  type = list(string)
+}
+
+########
+# Internal
+########
+variable "listener-listen-port" {
+  type = number
+  default = 80
+}
+
+variable "listener-listen-protocol" {
+  type = string
+  default = "HTTP"
+}
+
+variable "target-group-service-port" {
+  type = number
+  default = 8080
+}
