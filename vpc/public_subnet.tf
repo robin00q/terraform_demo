@@ -1,12 +1,12 @@
 ##########
 # public subnet
 ##########
-resource "aws_subnet" "sjlee-terraform-public-aws-subnet" {
+resource "aws_subnet" "sjlee-public-subnet" {
   count = length(var.availability_zones)
 
-  vpc_id = aws_vpc.sjlee-terraform-aws-vpc.id
+  vpc_id = aws_vpc.sjlee-vpc.id
 
-  cidr_block = "10.0.${var.cidr_number_public[count.index]}.0/24"
+  cidr_block = var.public_cidr_block[count.index]
   availability_zone = element(var.availability_zones, count.index)
 
   tags = {
@@ -19,12 +19,12 @@ resource "aws_subnet" "sjlee-terraform-public-aws-subnet" {
 # 0.0.0.0 -> igw
 # 10.0.0.0/16 -> local
 ##########
-resource "aws_route_table" "sjlee-terraform-public-subnet-aws-route-table" {
-  vpc_id = aws_vpc.sjlee-terraform-aws-vpc.id
+resource "aws_route_table" "sjlee-public-subnet-route-table" {
+  vpc_id = aws_vpc.sjlee-vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.sjlee-terraform-aws-internet-gateway.id
+    gateway_id = aws_internet_gateway.sjlee-internet-gateway.id
   }
 
   tags = {
@@ -35,9 +35,9 @@ resource "aws_route_table" "sjlee-terraform-public-subnet-aws-route-table" {
 ##########
 # attach [public subnet & public subnet routing table]
 ##########
-resource "aws_route_table_association" "sjlee-terraform-public-subnet-aws-route-table-association" {
+resource "aws_route_table_association" "sjlee-public-subnet-route-table-association" {
   count = length(var.availability_zones)
 
-  subnet_id = element(aws_subnet.sjlee-terraform-public-aws-subnet.*.id, count.index)
-  route_table_id = aws_route_table.sjlee-terraform-public-subnet-aws-route-table.id
+  subnet_id = element(aws_subnet.sjlee-public-subnet.*.id, count.index)
+  route_table_id = aws_route_table.sjlee-public-subnet-route-table.id
 }

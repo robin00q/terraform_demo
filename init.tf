@@ -1,6 +1,6 @@
 # backend S3 설정
 resource "aws_s3_bucket" "tfstate" {
-  bucket = "${var.tfstate_s3_bucket_name}"
+  bucket = var.tfstate_s3_bucket_name
 }
 
 resource "aws_s3_bucket_versioning" "tfstate_versioning_1" {
@@ -13,7 +13,7 @@ resource "aws_s3_bucket_versioning" "tfstate_versioning_1" {
 
 # backend dynamoDB 설정
 resource "aws_dynamodb_table" "tfstate_lock_1" {
-  name = "${var.tfstate_dynamo_lock_name}"
+  name = var.tfstate_dynamo_lock_name
   hash_key = "LockID"
   billing_mode = "PAY_PER_REQUEST"
 
@@ -42,15 +42,15 @@ module "module-vpc" {
 module "load-balancer" {
   source = "./load_balancer"
 
-  vpc_id = module.module-vpc.sjlee-terraform-aws-vpc-id
-  vpc_name = module.module-vpc.sjlee-terraform-aws-vpc-name
-  public_subnet_ids = module.module-vpc.sjlee-terraform-public-aws-subnet-ids
+  vpc_id = module.module-vpc.sjlee-vpc-id
+  vpc_name = module.module-vpc.sjlee-vpc-name
+  public_subnet_ids = module.module-vpc.sjlee-public-subnet-ids
   compute_cloud_ids = module.ec2.sjlee-terraform-compute-cloud-ids
 }
 
 module "ec2" {
   source = "./ec2"
 
-  vpc_id = module.module-vpc.sjlee-terraform-aws-vpc-id
-  public_subnet_ids = module.module-vpc.sjlee-terraform-public-aws-subnet-ids
+  vpc_id = module.module-vpc.sjlee-vpc-id
+  public_subnet_ids = module.module-vpc.sjlee-public-subnet-ids
 }

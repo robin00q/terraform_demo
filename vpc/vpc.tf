@@ -1,10 +1,10 @@
 ##########
 # VPC
 ##########
-resource "aws_vpc" "sjlee-terraform-aws-vpc" {
-  cidr_block = "10.0.0.0/16"
+resource "aws_vpc" "sjlee-vpc" {
+  cidr_block = var.vpc_cidr_block
 
   tags = {
-    Name = "${var.vpc_name}"
+    Name = var.vpc_name
   }
 }
